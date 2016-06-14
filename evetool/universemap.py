@@ -22,7 +22,7 @@ def inOneJump(start,dest):
 				dsystem = row
 
 	if not ssystem or not dsystem:
-		return 'At least one of the system names is NOT correct!'
+		return '__At least one of the system names is NOT correct!__'
 	x1, x2= float(ssystem[2]), float(dsystem[2])
 	y1, y2= float(ssystem[3]), float(dsystem[3])
 	z1, z2= float(ssystem[4]), float(dsystem[4])

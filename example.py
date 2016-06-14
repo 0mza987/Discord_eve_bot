@@ -23,20 +23,17 @@ url1='http://api.eve-central.com/api/marketstat?typeid=34&usesystem=30000142'
 
 
 
-def group(source):
-    cnt = 0
-    res = ''
-    size = len(source)
-    for x in range(size):
-        res = res + source[size-x-1]
-        cnt = cnt+1
-        if cnt == 3 and not x==size-1:
-            res=res+','
-            cnt = 0
-    return res[::-1]
-
-a = 'wo cao ni mei'
-print(a.split(2))
+# def group(source):
+#     cnt = 0
+#     res = ''
+#     size = len(source)
+#     for x in range(size):
+#         res = res + source[size-x-1]
+#         cnt = cnt+1
+#         if cnt == 3 and not x==size-1:
+#             res=res+','
+#             cnt = 0
+#     return res[::-1]
 
 
 
