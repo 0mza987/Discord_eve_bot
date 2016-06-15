@@ -56,4 +56,39 @@ async def on_message(message):
 
     elif message.content.startswith('!server'):
         await client.send_message(message.channel, serverinfo.serverinfo())
+    elif message.content.startswith('!prune'):
+        if not message.channel.permissions_for(message.author).manage_messages:
+            await client.send_message(message.channel, '__You are not allowed to manage messages.__')
+        else:
+            orders=message.content.split()
+            orderSize=len(orders)
+            if not orderSize==2:
+                await client.send_message(message.channel,'__Plese input the number!__')
+            elif not orders[1]=='init':
+                count=int(orders[1])+1
+                if count<1:
+                    await client.send_message(message.channel,'__Number is smaller than 0!__')
+                else:
+                    async for log in client.logs_from(message.channel, limit=500):
+                        await client.delete_message(log)
+                        count=count-1
+                        if count==0:
+                            break
+            else:
+                num=0
+                async for log in client.logs_from(message.channel, limit=500):
+                    num=num+1
+                if num>1:
+                    async for log in client.logs_from(message.channel, limit=500):
+                        await client.delete_message(log)
+                        num=num-1
+                        if num==1:
+                            break
+
+
+
+
+
+
+
 client.run('Token')
