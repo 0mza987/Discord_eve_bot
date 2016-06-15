@@ -17,6 +17,8 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    while message.content[-1]==' ':
+        message.content=message.content[0:len(message.content)-1]
     if message.content.startswith('!message'):
         counter = 0
         tmp = await client.send_message(message.channel, 'Calculating messages...')
@@ -46,10 +48,10 @@ async def on_message(message):
     elif message.content.startswith('!osy'):
     	orders = message.content
     	orderSize = len(orders)
-    	if orderSize<7:
+    	if orderSize<6:
     		reply = '__Please input one item name.__'
     	else:
-    		reply = price.howmuch(orders[6:],'OSY-UD')
+    		reply = price.howmuch(orders[5:],'OSY-UD')
     	await client.send_message(message.channel, reply)
 
     elif message.content.startswith('!server'):
