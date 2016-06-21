@@ -17,8 +17,8 @@ def main():
 		csvreader=csv.reader(f_in,delimiter=';')
 		for row in csvreader:
 			if last_system!='' and row[0]!=last_system:
-					adjacent_graph[last_system]=neighbors
-					neighbors=[]
+				adjacent_graph[last_system]=neighbors
+				neighbors=[]
 			neighbors.append(row[1])
 			last_system=row[0]
 		adjacent_graph[last_system]=neighbors
