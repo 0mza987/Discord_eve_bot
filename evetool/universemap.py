@@ -1,31 +1,30 @@
 import csv
 import os
 import math
+import pickle
 
 def inOneJump(start,dest):
 	"""
 	Determine if it's available for capital ships to jump between two systems.
-	Need coor_table.csv in directory: ./resources/database
+	Need systemInfo.pickle in directory: resources/
 	@parameters: start system, destination system
 	:return: The results of the calculations
 	"""
+	with open('resources/systemInfo.pickle','rb') as f:
+		systemInfo=pickle.load(f)
 
-	coor_table = os.path.join('resources',"coor_table.csv")
 	ssystem=dsystem=0
 	# find coordinates for the two input systems
-	with open(coor_table,newline ='') as f_in:
-		csvreader = csv.reader(f_in,delimiter =",")
-		for row in csvreader:
-			if row[0].upper().startswith(start.upper()):
-				ssystem = row
-			elif row[0].upper().startswith(dest.upper()):
-				dsystem = row
-
+	systemNames=list(systemInfo.keys())
+	for system in systemNames:
+		if system.lower().startswith(start.lower()):
+			ssystem=system
+		elif system.lower().startswith(dest.lower()):
+			dsystem=system
 	if not ssystem or not dsystem:
 		return '__At least one of the system names is NOT correct!__'
-	x1, x2= float(ssystem[2]), float(dsystem[2])
-	y1, y2= float(ssystem[3]), float(dsystem[3])
-	z1, z2= float(ssystem[4]), float(dsystem[4])
+	x1, y1, z1= systemInfo[ssystem][1], systemInfo[ssystem][2], systemInfo[ssystem][3]
+	x2, y2, z2= systemInfo[dsystem][1], systemInfo[dsystem][2], systemInfo[dsystem][3]
 	# calculate the distance between two systems in light years
 	distance = round(math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)+(z1-z2)*(z1-z2)),2)
 	# s1 for Titans, Supercarriers, Carriers, Dreadnoughts, Rorquals
@@ -63,5 +62,5 @@ __Rorquals__: {3}
 __Black Ops__: {4}
 
 __Jumpfreighters__: {5}
-	""".format(ssystem[0],dsystem[0],distance,s1,s2,s3)
+	""".format(ssystem,dsystem,distance,s1,s2,s3)
 	return result
