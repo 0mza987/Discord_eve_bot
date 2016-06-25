@@ -2,26 +2,6 @@ import math
 import sys
 import pickle
 
-if __name__=='__main__':
-	"""
-	Create a pickle file to store dijkstra results in /resources/:
-		- dijkstra_results.pickle
-	Results are stored in a dict,(e.g.):
-		{'30000001': {'30000002':2, '30000003':4, ...}, ...}
-	Need adjacent_graph.pickle in directory /resources
-	Warning: the size of result file will be more than 200 MB, that also means running this script will take a pretty long time
-	"""
-	sys.setrecursionlimit(10000)
-	dijkstra_results ={}
-	with open('resources/adjacent_graph.pickle','rb') as f:
-		graph = pickle.load(f)
-
-	systemList=list(graph.keys())
-	for system in systemList:
-		dijkstra(graph,system,system,0, dijkstra_results)
-	with open('dijkstra_results.pickle','wb') as f:
-		pickle.dump(dijkstra_results,f)
-
 
 def dijkstra(graph, source, key, cnt, res, visited=set(),distance={}, predecessors={}):
 	"""
@@ -73,3 +53,24 @@ def dijkstra(graph, source, key, cnt, res, visited=set(),distance={}, predecesso
 			dijkstra(graph,x,key,cnt,res,visited,distance,predecessors)
 		else:
 			dijkstra(graph,source,key,cnt,res,visited,distance,predecessors)
+
+if __name__=='__main__':
+	"""
+	Create a pickle file to store dijkstra results in /resources/:
+		- dijkstra_results.pickle
+	Results are stored in a dict,(e.g.):
+		{'30000001': {'30000002':2, '30000003':4, ...}, ...}
+	Need adjacent_graph.pickle in directory /resources
+	Warning: the size of result file will be more than 200 MB, that also means running this script will take a pretty long time
+	"""
+	sys.setrecursionlimit(10000)
+	dijkstra_results ={}
+	with open('resources/adjacent_graph.pickle','rb') as f:
+		graph = pickle.load(f)
+
+	systemList=list(graph.keys())
+	for system in systemList:
+		dijkstra(graph,system,system,0, dijkstra_results)
+	with open('dijkstra_results.pickle','wb') as f:
+		pickle.dump(dijkstra_results,f)
+

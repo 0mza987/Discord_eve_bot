@@ -4,7 +4,8 @@ import sqlite3
 import os
 import math
 import csv
-from evetool import universemap,price,serverinfo
+
+from evetool import universemap,price,serverinfo,route_planner
 
 client = discord.Client()
 
@@ -14,7 +15,7 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-
+    
 @client.event
 async def on_message(message):
     while message.content[-1]==' ':
@@ -84,6 +85,23 @@ async def on_message(message):
                         num=num-1
                         if num==1:
                             break
+    elif message.content.startswith('!route'):
+        orders=message.content.split()
+        orderSize = len(orders)
+        if not orderSize==3:
+            reply = '__Please input two system names.__'
+        else:
+            reply = route_planner.route_plan(orders[1],orders[2])
+        await client.send_message(message.channel, reply)
+
+
+# @client.event
+# async def prune(channel, count):
+#     while count>0:
+#         async for log in client.logs_from(channel,limit=500):
+#             target = log
+#         await client.delete_message(target)
+#         count = count-1
 
 
 
@@ -91,4 +109,5 @@ async def on_message(message):
 
 
 
-client.run('Token')
+
+client.run('')
